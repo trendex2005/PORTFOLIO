@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Trendex 𝐏𝐫𝐨𝐟𝐞𝐬𝐬𝐢𝐨𝐧𝐚𝐥 𝐓𝐨𝐨𝐥</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #6A1B9A;
+      --secondary: #6A1B9A;
+      --accent: #9C27B0;
+      --dark: #1E1E1E;
+      --light: #FFFFFF;
+      --gray: #B0BEC5;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--dark);
+      color: var(--light);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    #bgVideo {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      min-width: 100vw;
+      min-height: 100vh;
+      width: auto;
+      height: auto;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+      opacity: 0.3;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 60px 20px 30px;
+      background: rgba(30, 30, 30, 0.8);
+      backdrop-filter: blur(10px);
+      position: relative;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    header img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      object-fit: cover;
+      border: 3px solid var(--primary);
+      box-shadow: 0 0 20px rgba(106, 27, 154, 0.5);
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      color: var(--light);
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    header p {
+      font-size: 1.2rem;
+      font-weight: 400;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    .price-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: white;
+      padding: 8px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+      margin: 10px 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #clock {
+      font-size: 1rem;
+      margin-top: 15px;
+      color: var(--gray);
+      font-weight: 500;
+    }
+
+    section {
+      background: rgba(30, 30, 30, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 40px;
+      margin: 30px auto;
+      border-radius: 16px;
+      max-width: 850px;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 28px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--secondary), #059669);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 14px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-social {
+      padding: 12px 24px;
+      margin: 8px;
+      min-width: 160px;
+    }
+
+    .btn i {
+      margin-right: 8px;
+      font-size: 1.1rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--light);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(30, 30, 30, 0.6);
+      color: var(--light);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2);
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: var(--gray);
+    }
+
+    .form-section {
+      display: none;
+    }
+
+    .audio-controls {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: flex;
+      gap: 10px;
+    }
+
+    .audio-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary);
+      color: white;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .audio-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .audio-btn.mute {
+      background: #ef4444;
+    }
+
+    .social-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      background: rgba(30, 30, 30, 0.8);
+      backdrop-filter: blur(10px);
+      margin-top: 50px;
+      color: var(--gray);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: slideUp 0.6s ease forwards;
+    }
+
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      section {
+        padding: 25px;
+        margin: 20px auto;
+      }
+
+      .btn-social {
+        min-width: 140px;
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+
+      .social-grid {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<video id="bgVideo" autoplay loop muted playsinline>
+  <source src="https://www.dropbox.com/scl/fi/5ram6pa7mglz2c2orf5uy/Live-Wallpaper1742261663420.mp4?rlkey=irpy79sb82d99zyevq0wi8bkb&st=dq1kp906&raw=1" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<div class="audio-controls">
+  <button class="audio-btn" onclick="unmuteAudio()">
+    <i class="fas fa-volume-up"></i>
+  </button>
+  <button class="audio-btn mute" onclick="muteAudio()">
+    <i class="fas fa-volume-mute"></i>
+  </button>
+</div>
+
+<div class="container">
+  <header class="animate-in">
+    <img src="https://files.catbox.moe/j2h8dg.jpg" alt="Trendex Tech"/>
+    <h1>𝐌𝐘 𝐏𝐑𝐎𝐅𝐄𝐒𝐒𝐈𝐎𝐍𝐀𝐋 𝐓𝐎𝐎𝐋 </h1>
+    <p>Advanced automation solutions for your business</p>
+    <div class="price-tag">Only KES 100</div>
+    <div id="clock"></div>
+  </header>
+
+  <section class="animate-in">
+    <h2>Place Your Order</h2>
+    <p>Get your customized WhatsApp bot today and automate your customer interactions</p>
+    <button class="btn btn-primary" onclick="showForm()">
+      <i class="fas fa-shopping-cart"></i> PLACE ORDER
+    </button>
+  </section>
+
+  <section class="form-section" id="formSection">
+    <h2>Order Details</h2>
+    <form onsubmit="showConfirmation(event)">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" placeholder="Enter your name" required/>
+      </div>
+      <div class="form-group">
+        <label for="phone">WhatsApp Number</label>
+        <input type="text" id="phone" placeholder="Enter your WhatsApp number" required/>
+      </div>
+      <div class="form-group">
+        <label for="email">Email (Optional)</label>
+        <input type="email" id="email" placeholder="Enter your email"/>
+      </div>
+      <div class="form-group">
+        <label for="notes">Custom Notes or Request</label>
+        <textarea id="notes" rows="4" placeholder="Any special requirements..."></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">
+        <i class="fas fa-check-circle"></i> Continue to Payment
+      </button>
+    </form>
+  </section>
+
+  <section class="animate-in">
+    <h2>Source Code</h2>
+    <p>Explore our open-source projects and contribute to the community</p>
+
+    <div style="margin: 30px 0;">
+      <h3 style="color: var(--secondary); margin-bottom: 15px;">TREND-X</h3>
+      <a href="https://github.com/trendex2030/TREND-X" target="_blank">
+        <button class="btn btn-primary">
+          <i class="fab fa-github"></i> View on GitHub
+        </button>
+      </a>
+    </div>
+
+    <div style="margin: 30px 0;">
+      <h3 style="color: var(--accent); margin-bottom: 15px;">☪</h3>
+      <a href="https://trendxpaihtml-4cfeb9a41a27.herokuapp.com/pair" target="_blank">
+        <button class="btn btn-secondary">
+          <i class="☪"></i> PAIR-CODE 
+        </button>
+      </a>
+    </div>
+<div style="margin: 30px 0;">
+      <h3 style="color: var(--accent); margin-bottom: 15px;">☪</h3>
+      <a href="https://trendxpaihtml-4cfeb9a41a27.herokuapp.com/qr" target="_blank">
+        <button class="btn btn-secondary">
+          <i class="☪"></i> SCAN-QR-CODE
+        </button>
+      </a>
+    </div> 
+
+<div style="margin: 30px 0;">
+      <h3 style="color: var(--accent); margin-bottom: 15px;">☪</h3>
+      <a href="https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2Ftrendex2030%2FTREND-X" target="_blank">
+        <button class="btn btn-secondary">
+          <i class="☪"></i> DEPLOY-TO-HEROKU
+        </button>
+      </a>
+    </div> 
+
+
+  </section>
+
+
+
+
+  <section class="animate-in">
+    <h2>Connect With Us</h2>
+    <p>Reach out to us through any of these platforms</p>
+
+    <div class="social-grid">
+      <a class="btn btn-social" href="https://wa.me/254110081982" target="_blank" style="background: #25D366;">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+      </a>
+      <a class="btn btn-social" href="https://t.me/+9Sn3er1tGQA4YTg0" target="_blank" style="background: #0088cc;">
+        <i class="fab fa-telegram"></i> Telegram
+      </a>
+      <a class="btn btn-social" href="https://www.instagram.com/trendex_king_olton?igsh=MXJhajZ3eXQxMXVjNw==" target="_blank" style="background: #E1306C;">
+        <i class="fab fa-instagram"></i> Instagram
+      </a>
+      <a class="btn btn-social" href="https://www.facebook.com/bravin.nyakundi.9" target="_blank" style="background: #3b5998;">
+        <i class="fab fa-facebook"></i> Facebook
+      </a>
+      <a class="btn btn-social" href="ENTER YT LINK" target="_blank" style="background: #FF0000;">
+        <i class="fab fa-youtube"></i> YouTube
+      </a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <p>© 2025 TRENDEX KING | All Rights Reserved</p>
+  </div>
+</footer>
+
+<audio id="bgMusic" loop></audio>
+
+<script>
+  // Audio functionality
+  const audioElement = document.getElementById('bgMusic');
+  const songs = [
+    "https://www.dropbox.com/scl/fi/5qs6cv6uavenljyyd3krp/menu4.mp3?rlkey=siugyn6b197fu1w53an7penpr&st=wwcf1po9&raw=1",
+    "https://www.dropbox.com/scl/fi/d7kgf6o885lqvv945b6l3/menu3.mp3?rlkey=g4f5qzlaae5e7s2wrao9tcsoi&st=850b10jp&raw=1",
+    "https://www.dropbox.com/scl/fi/8v5crayltc8ri1ro6ucdz/menu2.mp3?rlkey=ywyp2wjyadc9c7s8dp67p8y7c&st=9xflt21z&raw=1"
+  ];
+  let currentSongIndex = 0;
+
+  function initAudio() {
+    audioElement.volume = 0.3;
+    audioElement.src = songs[currentSongIndex];
+
+    audioElement.addEventListener('ended', function() {
+      currentSongIndex = (currentSongIndex + 1) % songs.length;
+      audioElement.src = songs[currentSongIndex];
+      audioElement.play();
+    });
+  }
+
+  function unmuteAudio() {
+    audioElement.muted = false;
+    try {
+      if (audioElement.paused) {
+        audioElement.play();
+      }
+    } catch (e) {
+      console.log("Audio play failed:", e);
+    }
+  }
+
+  function muteAudio() {
+    audioElement.muted = true;
+  }
+
+  // Clock functionality
+  function updateClock() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString();
+    document.getElementById("clock").textContent = "Current Time: " + timeString;
+  }
+
+  // Form functionality
+  function showForm() {
+    document.getElementById("formSection").style.display = "block";
+    window.scrollTo({
+      top: document.getElementById("formSection").offsetTop - 100,
+      behavior: 'smooth'
+    });
+  }
+
+  function showConfirmation(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const phone = document.getElementById('phone').value;
+
+    const newTab = window.open('', '_blank');
+    newTab.document.write(`
+      <html>
+      <head>
+        <title>Order Confirmed - MR TRENDEX KING</title>
+        <style>
+          body {
+            background-color: #1E1E1E;
+            color: #FFFFFF;
+            font-family: 'Inter', sans-serif;
+            text-align: center;
+            padding: 40px 20px;
+            line-height: 1.6;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+          }
+          h2 {
+            color: #6A1B9A;
+            margin-bottom: 20px;
+          }
+          p {
+            margin: 15px 0;
+            color: #B0BEC5;
+          }
+          .highlight {
+            color: #FFFFFF;
+            font-weight: 600;
+          }
+          .btn {
+            display: inline-block;
+            background: #6A1B9A;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 15px 10px;
+            transition: all 0.3s ease;
+          }
+          .btn:hover {
+            background: #4A148C;
+            transform: translateY(-2px);
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h2>Thank You, ${name}!</h2>
+          <p>Your order has been received successfully.</p>
+
+          <p><span class="highlight">Payment Instructions:</span></p>
+          <p>Send <span class="highlight">KES 100</span> to:</p>
+          <p><span class="highlight">Phone Number:</span> 254110081982</p>
+          <p><span class="highlight">Account Name:</span> Linet Ondari</p>
+
+          <p>After making the payment, click the button below to confirm:</p>
+
+          <a href="https://wa.me/254110081982?text=Hi%2C+I+have+paid+KES+100+for+OBED+TECH+Bot.+My+name+is+${encodeURIComponent(name)}.+My+number+is+${encodeURIComponent(phone)}"
+             target="_blank" class="btn">
+            Confirm Payment via WhatsApp
+          </a>
+
+          <br>
+
+          <a href="https://deployment-yr-nui9.vercel.app/" target="_blank" class="btn">
+            Go to Deployment
+          </a>
+        </div>
+      </body>
+      </html>
+    `);
+  }
+
+  // Initialize when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    initAudio();
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // Add intersection observer for animations
+    const animatedElements = document.querySelectorAll('.animate-in');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    animatedElements.forEach(el => {
+      el.style.opacity = 0;
+      el.style.transition = 'opacity 0.6s ease';
+      observer.observe(el);
+    });
+
+    // Enable audio on first interaction
+    let firstInteraction = () => {
+      unmuteAudio();
+      document.removeEventListener('click', firstInteraction);
+    };
+    document.addEventListener('click', firstInteraction);
+  });
+</script>
+
+</body>
+</html>
